@@ -1,0 +1,19 @@
+body {
+  background-color: #EEE;
+}
+
+.nav__icon {
+  padding-left: 10px;
+}
+
+.person__icons{
+  color: #ef5350;
+}
+
+.person__detail {
+  margin-left: 2%;
+}
+
+.card-content > p {
+  margin: 2% 0 !important;
+}
