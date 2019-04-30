@@ -14,7 +14,7 @@ main {
 }
 
 .person__icons{
-  color: #ef5350;
+  color: #e53935;
 }
 
 .person__detail {
@@ -23,4 +23,12 @@ main {
 
 .card-content > p {
   margin: 2% 0 !important;
+}
+
+.card-image img {
+  height:400px;
+}
+
+.card__hobby img {
+  height: 300px;
 }
