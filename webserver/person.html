@@ -17,33 +17,33 @@
 
 <!-- BODY tag -->
 <body>
+  <header>
   <!-- NAVIGATION -->
     <!-- DESKTOP NAVIGATION -->
     <nav>
-        <div class="nav-wrapper">
-            <a href="index.html" class="brand-logo"><i class="material-icons nav__icon">all_inclusive</i>Arduino</a>
-            <a href="index.html" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            <ul class="right hide-on-med-and-down">
-                <li class="active"><a href="person.html">Person</a></li>
-                <li><a href="hobby.html">Hobbies</a></li>
-                <li><a href="family.html">Family</a></li>
-            </ul>
-        </div>
+      <div class="nav-wrapper">
+        <a href="index.html" class="brand-logo"><i class="material-icons nav__icon">all_inclusive</i>Arduino</a>
+        <a href="index.html" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li class="active"><a href="person.html">Person</a></li>
+          <li><a href="hobby.html">Hobbies</a></li>
+          <li><a href="family.html">Family</a></li>
+        </ul>
+      </div>
     </nav>
     <!-- MOBILE NAVIGATION -->
     <ul class="sidenav" id="mobile-demo">
-        <li class="active"><a href="person.html">Person</a></li>
-        <li><a href="hobby.html">Hobbies</a></li>
-        <li><a href="family.html">Family</a></li>
+      <li class="active"><a href="person.html">Person</a></li>
+      <li><a href="hobby.html">Hobbies</a></li>
+      <li><a href="family.html">Family</a></li>
     </ul>
-  <!-- BODY -->
-  <div class="container">
+  </header>
+  <!-- MAIN -->
+  <main>
+    <div class="container">
       <div class="row">
-        <div class="col s2">
-
-        </div>
-        <!-- CARD -->
-        <div class="col s8 card__position">
+        <!-- PERSONAL CARD -->
+        <div class="col s12 m8 offset-m2 card__position">
           <div class="card horizontal hoverable">
             <div class="card-image">
               <img src="assets/images/kevin.jpg">
@@ -51,7 +51,7 @@
             <div class="card-stacked">
               <div class="card-content">
                 <p class="valign-wrapper"><i class="material-icons small person__icons">person</i><strong class="person__detail">Kevin Leemans</strong></p>
-                <p class="valign-wrapper"><i class="material-icons small person__icons">email</i><strong class="person__detail">kevin.leemans11@gmail.com</strong></p>
+                <p class="valign-wrapper"><i class="material-icons small person__icons">email</i><strong class="person__detail">kevinleemans11@gmail.com</strong></p>
                 <p class="valign-wrapper"><i class="material-icons small person__icons">phone_android</i><strong class="person__detail">+32 496/13 85 71</strong></p>
                 <p class="valign-wrapper"><i class="material-icons small person__icons">cake</i><strong class="person__detail">10/10/1997</strong></p>
                 <p class="valign-wrapper"><i class="material-icons small person__icons">location_on</i><strong class="person__detail">Begoniastraat 7, 9552, Borsbeke</strong></p>
@@ -61,10 +61,24 @@
             </div>
           </div>
         </div> 
-        <div class="col s2">
-
-        </div> 
       </div>
-  </div>
+    </div>
+  </main>
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Information</h5>
+          <p class="grey-text text-lighten-4">This Website is made in a school environment and is not used for commercial purposes.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      © 2019 Kevin Leemans
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
