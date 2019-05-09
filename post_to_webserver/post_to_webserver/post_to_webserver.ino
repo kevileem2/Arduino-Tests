@@ -1,23 +1,25 @@
-
+//Load JSOn library
+#include <ArduinoJson.h>
 // Load Wi-Fi library
 #include <WiFi.h>
+
 // similar webpage on 1 line , use minify ?? http://minifycode.com/html-minifier/
 
 //const char* ssid = "DESKTOP-ID7JU42 8285";
 //const char* password =  "X782$5w9";
 
-//const char* ssid = "Arduino-CVO";
-//const char* password = "";
+const char* ssid = "CVO-Arduino";
+const char* password = "";
 
-const char* ssid = "WiFi-2.4-E918";
-const char* password =  "wudz36zwrkb63";
+//const char* ssid = "WiFi-2.4-E918";
+//const char* password =  "wudz36zwrkb63";
+
 const byte red_button = 13;
 const byte green_button = 12;
 
 const char indexpage[] = "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Post to Web Server | CVO Leerstad - Arduino II | Index</title><link rel=\"stylesheet\" href=\"assets/css/main.css\"><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css\"><link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/icon?family=Material+Icons\"> <script src=\"assets/js/main.js\"></script> </head><body> <header> <nav><div class=\"nav-wrapper red darken-1\"> <a href=\"index.html\" class=\"brand-logo center\"><i class=\"material-icons\">all_inclusive</i>Arduino</a></div> </nav> </header> <main><div class=\"container\"><div class=\"row justify-content-center\"><div class=\"col s12 l6\"><h4>Here is where the state of the first button will be send to:</h4> <span id=\"button1_state\"></span></div><div class=\"col s12 l6\"><h4>Here is where the state of the second button will be send to:</h4> <span id=\"button2_state\"></span></div></div></div> </main> <footer class=\"page-footer\"><div class=\"container\"><div class=\"row\"><div class=\"col l6 s12\"><h5 class=\"white-text\">Information</h5><p class=\"grey-text text-lighten-4\">This Website is made in a school environment and is not used for commercial purposes.</p></div></div></div><div class=\"footer-copyright z-depth-1 red darken-1\"><div class=\"container\"> © 2019 Kevin Leemans</div></div> </footer></body></html>";
 const char styles[] = "body {\n    display: flex;\n    min-height: 100vh;\n    flex-direction: column;\n    background-color: #EEE;\n  }\n  \n  main {\n    flex: 1 0 auto;\n  }";
-const char script[] = "document.addEventListener('DOMContentLoaded', function() {\n    setInterval(() => {\n        var xhttp = new XMLHttpRequest()\n        xhttp.onreadystatechange = function() {\n            if (this.readyState == 4 && this.status == 200) {\n            document.getElementById(\"button1_state\").innerHTML = this.responseText\n            }\n        }\n        xhttp.open(\"GET\", \"firstbutton\", true)\n        xhttp.send()\n    }, 100)\n    setInterval(() => {\n        var xhttp = new XMLHttpRequest()\n        xhttp.onreadystatechange = function() {\n            if (this.readyState == 4 && this.status == 200) {\n            document.getElementById(\"button2_state\").innerHTML = this.responseText\n            }\n        }\n        xhttp.open(\"GET\", \"secondbutton\", true)\n        xhttp.send()\n    }, 100)\n})";
-
+const char script[] = "document.addEventListener('DOMContentLoaded', function() {\n  setInterval(() => {fetch_request(\"button1_state\", \"firstbutton\")}, 100)\n  setInterval(() => {fetch_request(\"button2_state\", \"secondbutton\")}, 100)\n})\n\nlet fetch_request = function (id, data) {\n  fetch(data).then(async (response) => {\n    if(response.ok) {\n      const json = await response.json();\n      document.getElementById(id).innerHTML = json.message;\n    }\n  }).catch((error) => {\n    console.log(error)\n  })\n}";
 
 // Set web server port number to 80
 WiFiServer server(80);
@@ -50,6 +52,7 @@ void setup() {
 }
 
 void loop() {
+  StaticJsonDocument<300> doc;
   WiFiClient client = server.available();   // Listen for incoming clients
 
   if (client) {                             // If a new client connects,
@@ -89,12 +92,24 @@ void loop() {
               Serial.println("ESP sended css file to client");
 
             }else if (header.indexOf("GET /firstbutton") >= 0) {
-              client.print("HTTP/1.1 200 OK\r\nContent-Length:1\r\n\r\n");client.print(digitalRead(red_button));
+              doc["message"] = digitalRead(red_button);
+              serializeJson(doc, Serial);
+              client.print("HTTP/1.1 200 OK");
+              client.println("Content-Type: application/json");
+              client.print("Content-Length:");client.println(measureJson(doc));
+              client.println();
+              serializeJson(doc, client);
               Serial.println("ESP sended state of red button to server"); 
 
             }else if (header.indexOf("GET /secondbutton") >= 0) {
-              client.print("HTTP/1.1 200 OK\r\nContent-Length:1\r\n\r\n");client.print(digitalRead(green_button));
-              Serial.println("ESP sended state of green button to server"); 
+              doc["message"] = digitalRead(green_button);
+              serializeJson(doc, Serial);
+              client.print("HTTP/1.1 200 OK");
+              client.println("Content-Type: application/json");
+              client.print("Content-Length:");client.println(measureJson(doc));
+              client.println();
+              serializeJson(doc, client);
+              Serial.println("ESP sended state of green button to server");  
 
             }else if (header.indexOf("GET /assets/js/main.js") >= 0) {
               client.println("HTTP/1.1 200 OK");
