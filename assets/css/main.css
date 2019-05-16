@@ -1,0 +1,22 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: #EEE;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.nav__icon {
+  padding-left: 10px;
+}
+
+.card-content > p {
+  margin: 2% 0 !important;
+}
+
+.card__project img {
+  height: 300px;
+}
